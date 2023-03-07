@@ -98,45 +98,48 @@
                 <div class="col-lg-6">
                     <div class="appointment-form h-100 d-flex flex-column justify-content-center text-center p-5 wow zoomIn" data-wow-delay="0.6s">
                         <h1 class="text-white mb-4">Make Appointment</h1>
-                        <form>
-                            <div class="row g-3">
+<!--                         <form id="my-form">
+ -->                            <div class="row g-3">
                                 <div class="col-12 col-sm-6">
-                                    <select class="form-select bg-light border-0" style="height: 55px;">
+                                    <select class="form-select bg-light border-0" style="height: 55px;" id="services">
                                         <option selected>Select A Service</option>
-                                        <option value="1">Service 1</option>
-                                        <option value="2">Service 2</option>
-                                        <option value="3">Service 3</option>
+                                        <option value="Service 1">Service 1</option>
+                                        <option value="Service 2">Service 2</option>
+                                        <option value="Service 3">Service 3</option>
                                     </select>
                                 </div>
                                 <div class="col-12 col-sm-6">
-                                        <input type="text" class="form-control bg-light border-0" placeholder="DNI" style="height: 55px;">
+                                        <input type="text" class="form-control bg-light border-0" placeholder="DNI" id="dni" style="height: 55px;">
                                 </div>
                                 <div class="col-12 col-sm-6">
-                                    <input type="text" class="form-control bg-light border-0" placeholder="Name" style="height: 55px;">
+                                    <input type="text" class="form-control bg-light border-0" placeholder="Name" id="name" style="height: 55px;">
                                 </div>
                                 <div class="col-12 col-sm-6">
-                                    <input type="email" class="form-control bg-light border-0" placeholder="Email" style="height: 55px;">
+                                    <input type="text" class="form-control bg-light border-0" placeholder="Last Name" id="lastname" style="height: 55px;">
                                 </div>
                                 <div class="col-12 col-sm-6">
                                     <div class="date" id="date1" data-target-input="nearest">
-                                        <input type="text"
+                                        <input type="date"
                                             class="form-control bg-light border-0 datetimepicker-input"
-                                            placeholder="Appointment Date" data-target="#date1" data-toggle="datetimepicker" style="height: 55px;">
+                                            placeholder="Appointment Date" data-target="#date1" data-toggle="datetimepicker" id="date" style="height: 55px;">
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6">
                                     <div class="time" id="time1" data-target-input="nearest">
-                                        <input type="text"
+                                        <input type="time"
                                             class="form-control bg-light border-0 datetimepicker-input"
-                                            placeholder="Appointment Time" data-target="#time1" data-toggle="datetimepicker" style="height: 55px;">
+                                            placeholder="Appointment Time" data-target="#time1" data-toggle="datetimepicker" id= "time" style="height: 55px;">
                                     </div>
                                 </div>
+                                <div class="col-12 col-sm-6">
+                                    <input type="email" class="form-control bg-light border-0" placeholder="Email" id="email" style="height: 55px; width: 205%;">
+                                </div>
                                 <div class="col-12">
-                                    <button class="btn btn-dark w-100 py-3" type="submit">Make Appointment</button>
+                                    <button class="btn btn-dark w-100 py-3" onclick="onClickButtonAppointment()">Make Appointment</button>
                                 </div>
                             </div>
-                        </form>
-                    </div>
+<!--                         </form>
+ -->                    </div>
                 </div>
             </div>
         </div>
@@ -162,6 +165,8 @@
 
 
     <!-- JavaScript Libraries -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="./js/axios.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
  
