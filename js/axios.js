@@ -133,7 +133,7 @@ async function onClickButtonPayment() {
   try {
    
     /*disableButton();*/
-    if (dni !== '' && amount !== '' && confirmationNumber !== '' && !File) {
+    if (dni !== '' && amount !== '' && confirmationNumber !== '') {
         const userExist = await axios.get(`http://10.200.38.137:5000/api/client/byDNI?dni=${dni}`);
         if (userExist.data.ok) {
             const filess = File;
@@ -148,96 +148,151 @@ async function onClickButtonPayment() {
                 const file = await res.json();
                 console.log(file.secure_url);
                 amount = amount.replace(/\n/g, '<br />');
-                axios.post('/payment/create',
+                axios.post('http://10.200.38.137:5000/api//payment/create',
                     {
                         idClient: userExist.data.data.idClient,
-                        amount: values.amount,
+                        amount,
                         billImage: file.secure_url,
-                        confirmationNumber: confirmationNumber
+                        confirmationNumber
                     }
                 ).then(res => {
                     if (res.data.ok) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Done!',
-                            text: 'The payment report was successfully completed!',
-                            footer: 'SERVIMAINPER © 2023 - All Rights Reserved',
-                        })
+                      const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 4000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                          toast.addEventListener('mouseenter', Swal.stopTimer)
+                          toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                      })
+                      
+                      Toast.fire({
+                        icon: 'success',
+                        title: 'The payment report was successfully completed!'
+                      })
                     } else {
+                      const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 4000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                          toast.addEventListener('mouseenter', Swal.stopTimer)
+                          toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                      })
+                      
+                      Toast.fire({
+                        icon: 'error',
+                        title: 'An error has occurred, please check the fields and try again.'
+                      })
                       console.log('An error has occurred, please check the fields and try again.');
                     }
                 }).catch(err => {
+                    const Toast = Swal.mixin({
+                      toast: true,
+                      position: 'top-end',
+                      showConfirmButton: false,
+                      timer: 4000,
+                      timerProgressBar: true,
+                      didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                      }
+                    })
+                    
+                    Toast.fire({
+                      icon: 'error',
+                      title: 'An error has occurred,  please try again later.'
+                    })
                     console.log(err);
                     console.log('An error has occurred, please try again later.');
                 })
             } else {
+              const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 4000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.addEventListener('mouseenter', Swal.stopTimer)
+                  toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+              })
+              
+              Toast.fire({
+                icon: 'info',
+                title: 'An error occurred while trying to upload the image, please check the image and try again.'
+              })
               console.log('An error occurred while trying to upload the image, please check the image and try again.');
             }
         } else {
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 4000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+          })
+          
+          Toast.fire({
+            icon: 'info',
+            title: 'You are not registered, please contact the service administrator.'
+          })
           console.log('You are not registered, please contact the service administrator.');
         }
     } else {
+      const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 4000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      })
+      
+      Toast.fire({
+        icon: 'info',
+        title: 'Please fill in all fields.'
+      })
       console.log('Please fill in all fields.');
     }
     
 } catch (e) {
     
-    console.log(e);
+   console.log(e);
    console.log('An error has occurred, please try again later.');
-   Swal.fire({
-    icon: 'error',
-    title: 'Error!',
-    text: 'The payment report was no send!',
-    footer: 'SERVIMAINPER © 2023 - All Rights Reserved',
-})
+   const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 4000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  })
+  
+  Toast.fire({
+    icon: 'info',
+    title: 'An error has occurred, please try again later.'
+  })
+   
 }
 
-
-
-
- /*  const { data } = await axios.post('http://10.200.38.137:5000/api/client/mail', {
-    "name": name,
-    "message": message,
-    "email": email
-  });
-  
-  if(data.ok == false){
-    const Toast = Swal.mixin({
-      toast: true,
-      position: 'top-end',
-      showConfirmButton: false,
-      timer: 3000,
-      timerProgressBar: true,
-      didOpen: (toast) => {
-        toast.addEventListener('mouseenter', Swal.stopTimer)
-        toast.addEventListener('mouseleave', Swal.resumeTimer)
-      }
-    })
-    
-    Toast.fire({
-      icon: 'error',
-      title: data.message
-    })
-  }
-  else{
-    const Toast = Swal.mixin({
-      toast: true,
-      position: 'top-end',
-      showConfirmButton: false,
-      timer: 3000,
-      timerProgressBar: true,
-      didOpen: (toast) => {
-        toast.addEventListener('mouseenter', Swal.stopTimer)
-        toast.addEventListener('mouseleave', Swal.resumeTimer)
-      }
-    })
-    
-    Toast.fire({
-      icon: 'success',
-      title: data.message
-    })
-  }
-  console.log(data); */
 
 }
 
