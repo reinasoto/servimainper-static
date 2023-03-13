@@ -9,7 +9,8 @@ async function onClickButtonAppointment() {
 
   let select = document.getElementById("services");
   let option = select.options[select.selectedIndex];
-  let optionV = option.value
+  let service = option.value
+  console.log(service)
   let dni = document.getElementById("dni").value;
   console.log(dni);
   let name = document.getElementById("name").value;
@@ -24,11 +25,55 @@ async function onClickButtonAppointment() {
   console.log(email);
 
 
-  const { data } = await axios.post('https://10.200.', document.getElementById('my-form'), {
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  })
+  const {data} = await axios.post('http://localhost:5000/api/client/appointment', {
+    "service": service,
+    "dni": dni,
+    "name": name,
+    "lastname": lastname,
+    "date": date,
+    "time": time,
+    "email": email
+  });
+
+  console.log(data)
+
+  if(data.ok == false){
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }
+    })
+    
+    Toast.fire({
+      icon: 'error',
+      title: data.message
+    })
+  }
+  else{
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+      }
+    })
+    
+    Toast.fire({
+      icon: 'success',
+      title: data.message
+    })
+  }
+  console.log(data);
 
 }
 
@@ -57,7 +102,7 @@ async function onClickButtonContact() {
   let email = document.getElementById("email").value;
   console.log(email);
 
-  const { data } = await axios.post('http://10.200.38.137:5000/api/client/mail', {
+  const { data } = await axios.post('http://localhost:5000/api/client/mail', {
     "name": name,
     "message": message,
     "email": email
@@ -134,7 +179,7 @@ async function onClickButtonPayment() {
    
     /*disableButton();*/
     if (dni !== '' && amount !== '' && confirmationNumber !== '') {
-        const userExist = await axios.get(`http://10.200.38.137:5000/api/client/byDNI?dni=${dni}`);
+        const userExist = await axios.get(`http://localhost:5000/api/client/byDNI?dni=${dni}`);
         if (userExist.data.ok) {
             const filess = File;
             const data = new FormData();
@@ -148,7 +193,7 @@ async function onClickButtonPayment() {
                 const file = await res.json();
                 console.log(file.secure_url);
                 amount = amount.replace(/\n/g, '<br />');
-                axios.post('http://10.200.38.137:5000/api//payment/create',
+                axios.post('http://localhost:5000/api//payment/create',
                     {
                         idClient: userExist.data.data.idClient,
                         amount,
