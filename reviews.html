@@ -1,0 +1,48 @@
+<!-- Sección de reseñas de Google -->
+<div class="google-reviews">
+  <!-- Copia y pega el código HTML generado por Google aquí -->
+</div>
+
+<!-- Estilos CSS para personalizar la sección de reseñas de Google -->
+<style>
+.google-reviews {
+  background-color: #f5f5f5;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.google-reviews h3 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.google-reviews p {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.google-reviews a {
+  color: #0077cc;
+  text-decoration: none;
+}
+</style>
+
+<!-- Script de JavaScript para agregar interacciones dinámicas -->
+<script>
+// Agregar una clase CSS al enlace de la reseña más reciente
+document.querySelector('.google-reviews a:first-of-type').classList.add('latest-review');
+
+// Agregar un efecto de desplazamiento suave al hacer clic en los enlaces
+document.querySelectorAll('.google-reviews a').forEach(function(link) {
+  link.addEventListener('click', function(event) {
+    event.preventDefault();
+    var target = this.getAttribute('href');
+    var offset = document.querySelector(target).getBoundingClientRect().top + window.pageYOffset;
+    window.scrollTo({
+      top: offset,
+      behavior: 'smooth'
+    });
+  });
+});
+</script>
