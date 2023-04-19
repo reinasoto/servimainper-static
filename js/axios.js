@@ -20,8 +20,6 @@ async function onClickButtonAppointment() {
   service = service1 +" - "+ serviceSelected3;
  // console.log(service);
 
-  let dni = document.getElementById("dni").value;
-  //console.log(dni);
   let name = document.getElementById("name").value;
   //console.log(name);
   let phone = document.getElementById("phone").value;
@@ -33,8 +31,21 @@ async function onClickButtonAppointment() {
   let email = document.getElementById("email").value;
  // console.log(email);
 
+ // Obtener el año actual
+  const currentYear = new Date().getFullYear().toString().substr(-2);
 
-   const {data} = await axios.post('https://servimainper-back-production.up.railway.app/api/client/appointment', {
+// Generar un número aleatorio de 6 dígitos
+  const randomNumber = Math.floor(Math.random() * 999999) + 1;
+
+// Completar con ceros a la izquierda hasta llegar a 6 dígitos
+  const paddedNumber = randomNumber.toString().padStart(6, '0');
+
+// Concatenar el número aleatorio con el año actual
+ let dni = `${paddedNumber}-${currentYear}`;
+
+
+
+ const {data} = await axios.post('https://servimainper-back-production.up.railway.app/api/client/appointment', {
     "service": service,
     "dni": dni,
     "name": name,
